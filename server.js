@@ -23,12 +23,14 @@ mongoose
 const db = mongoose.connection;
 db.on('error', (err) => console.log('Error:', err.message));
 
+// Set message for root route /
 app.get('/', (req, res) => {
   res.send(
     'Welcome to my express server! please use /api/candidates to access the API'
   );
 });
 
+// Import the routes
 const candidatesRouter = require('./routes/candidates');
 app.use('/api/candidates', candidatesRouter);
 

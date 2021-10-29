@@ -1,3 +1,4 @@
+// Import express to use its Router
 const express = require('express');
 const router = express.Router();
 
@@ -76,6 +77,7 @@ router.delete('/:id', getCandidate, async (req, res) => {
   }
 });
 
+// Middleware function to get a candidate using the id supplied in the url
 async function getCandidate(req, res, next) {
   let candidate;
   try {
