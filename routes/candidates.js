@@ -47,6 +47,24 @@ router.get('/:id', getCandidate, async (req, res) => {
 });
 
 // UPDATE
+router.put('/:id', getCandidate, async (req, res) => {
+  res.candidate.docType = req.body.docType;
+  res.candidate.docId = req.body.docId;
+  res.candidate.firstName = req.body.firstName;
+  res.candidate.lastName = req.body.lastName;
+  res.candidate.address = req.body.address;
+  res.candidate.email = req.body.email;
+  res.candidate.cellphone = req.body.cellphone;
+  res.candidate.url = req.body.url;
+  res.candidate.description = req.body.description;
+
+  try {
+    const updatedCandidate = await res.candidate.save();
+    res.json(updatedCandidate);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
 // DELETE
 router.delete('/:id', getCandidate, async (req, res) => {
