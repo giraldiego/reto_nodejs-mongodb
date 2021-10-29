@@ -7,8 +7,8 @@ const Candidate = require('../models/candidate');
 // CREATE
 router.post('/', async (req, res) => {
   console.log('POST request received');
+  console.log(req.body);
   // Build the new Candidate using body data
-
   const candidate = new Candidate({
     docType: req.body.docType,
     docId: req.body.docId,
@@ -40,14 +40,27 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', getCandidate, async (req, res) => {
+  res.json(res.candidate);
+});
+
 // UPDATE
 
 // DELETE
 
-// function validateCandidate(candidate) {
-//   const schema = Joi.object({
-
-//   });
-// }
+async function getCandidate(req, res, next) {
+  let candidate;
+  try {
+    candidate = await Candidate.findById(req.params.id);
+    if (candidate === null) {
+      return res.status(404).json({ message: 'Cannot find candidate :(' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+  console.log(candidate);
+  res.candidate = candidate;
+  next();
+}
 
 module.exports = router;
