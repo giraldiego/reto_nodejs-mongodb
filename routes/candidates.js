@@ -30,6 +30,7 @@ router.post('/', async (req, res) => {
 });
 
 // RETRIEVE
+// Retrieve all
 router.get('/', async (req, res) => {
   try {
     const candidates = await Candidate.find();
@@ -40,6 +41,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Retrieve by id
 router.get('/:id', getCandidate, async (req, res) => {
   res.json(res.candidate);
 });
@@ -47,6 +49,14 @@ router.get('/:id', getCandidate, async (req, res) => {
 // UPDATE
 
 // DELETE
+router.delete('/:id', getCandidate, async (req, res) => {
+  try {
+    await res.candidate.remove();
+    res.json({ message: 'Candidate deleted!' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 async function getCandidate(req, res, next) {
   let candidate;
