@@ -16,7 +16,7 @@ mongoose
     console.log('Connected to Database!');
   })
   .catch((err) => {
-    console.log('Failed to connect:', err.message);
+    console.error('Failed to connect:', err.message);
   });
 
 // Add listener for errors in DB Connection

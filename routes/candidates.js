@@ -1,3 +1,6 @@
+// Add better debug
+const debug = require('debug')('app:db');
+
 // Import express to use its Router
 const express = require('express');
 const router = express.Router();
@@ -7,8 +10,9 @@ const Candidate = require('../models/candidate');
 
 // CREATE
 router.post('/', async (req, res) => {
-  console.log('POST request received');
-  console.log(req.body);
+  debug('POST request received');
+  debug('body:', req.body);
+
   // Build the new Candidate using body data
   const candidate = new Candidate({
     docType: req.body.docType,
@@ -35,7 +39,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const candidates = await Candidate.find();
-    console.log('All candidates retrieved from DB');
+    debug('All candidates retrieved from DB');
     res.json(candidates);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -88,7 +92,7 @@ async function getCandidate(req, res, next) {
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
-  console.log(candidate);
+  debug('Candidate found by id!');
   res.candidate = candidate;
   next();
 }
